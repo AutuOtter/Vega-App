@@ -4,11 +4,12 @@ import 'rxjs/add/operator/map';
 import { Observable } from '../../../node_modules/rxjs/Observable';
 
 @Injectable()
-export class MakeService {
+export class FeatureService {
 
   constructor(private http: HttpClient) { }
 
-  getMakes(): Observable<MakeService> {
-    return this.http.get<MakeService>('/api/makes');
+  getFeatures(): Observable<FeatureService> {
+    return this.http.get<FeatureService>('/api/features');
   }
+
 }
