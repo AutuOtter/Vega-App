@@ -12,7 +12,8 @@ export class VehicleFormComponent implements OnInit {
   models;
   features;
   vehicle: any = {
-    features: []
+    features: [],
+    contact: {}
   };
 
   // Ideally have no more than 3 services, 5 is max.
