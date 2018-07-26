@@ -25,8 +25,8 @@ export class VehicleFormComponent implements OnInit {
     this.vehicleService.getMakes()
     .subscribe(makes => this.makes = makes);
 
-      this.vehicleService.getFeatures()
-      .subscribe(features => this.features = features)
+    this.vehicleService.getFeatures()
+    .subscribe(features => this.features = features)
   }
 
   onMakeChange() {
@@ -42,5 +42,16 @@ export class VehicleFormComponent implements OnInit {
         var index = this.vehicle.features.indexOf(featureId);
         this.vehicle.features.splice(index, 1);
       }
+  }
+
+  submit() {
+    /*var testVehicle = this.vehicleService.create(this.vehicle)
+    .subscribe(x => console.log(x));
+
+    console.log("TEST VEHICLE", testVehicle)
+    */
+   
+   this.vehicleService.create(this.vehicle)
+    .subscribe(x => console.log(x));
   }
 }
