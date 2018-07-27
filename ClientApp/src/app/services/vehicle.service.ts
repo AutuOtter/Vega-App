@@ -12,6 +12,8 @@ export class VehicleService {
 
   constructor(private http: HttpClient) { }
 
+  // LOOK UP this.http.get<VehicleService>('/api/features'); 
+  // vs this.http.get('/api/features');
   getFeatures() {
     return this.http.get<VehicleService>('/api/features');
   }
@@ -22,5 +24,9 @@ export class VehicleService {
 
   create(vehicle) {
     return this.http.post('/api/vehicles', vehicle);
+  }
+
+  getVehicle(id) {
+    return this.http.get('/api/vehicles/' + id);
   }
 }

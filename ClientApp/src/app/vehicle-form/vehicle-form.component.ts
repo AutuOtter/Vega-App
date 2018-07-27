@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../services/vehicle.service';
 import { error } from 'util';
+import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
 
 
 @Component({
@@ -20,9 +21,24 @@ export class VehicleFormComponent implements OnInit {
   // Ideally have no more than 3 services, 5 is max.
   // Creates a lot of dependecies that are hard to unit test.
   constructor(
-    private vehicleService: VehicleService) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private vehicleService: VehicleService) { 
+
+      route.params.subscribe(p => {
+        this.vehicle.id = +p['id'];
+      });
+    }
 
   ngOnInit() {
+    this.vehicleService.getVehicle(this.vehicle.id)
+      .subscribe(v => {
+        this.vehicle = v;
+      }, err => {
+        if (err.status == 404)
+          this.router.navigate(['/home'])
+      });
+
     this.vehicleService.getMakes()
     .subscribe(makes => this.makes = makes);
 
