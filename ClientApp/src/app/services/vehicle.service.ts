@@ -1,11 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Observable } from '../../../node_modules/rxjs/Observable';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class VehicleService {
@@ -15,11 +10,11 @@ export class VehicleService {
   // LOOK UP this.http.get<VehicleService>('/api/features'); 
   // vs this.http.get('/api/features');
   getFeatures() {
-    return this.http.get<VehicleService>('/api/features');
+    return this.http.get('/api/features');
   }
 
   getMakes() {
-    return this.http.get<VehicleService>('/api/makes');
+    return this.http.get('/api/makes');
   }
 
   create(vehicle) {
