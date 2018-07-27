@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../services/vehicle.service';
+import { error } from 'util';
 
 
 @Component({
@@ -45,13 +46,10 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    /*var testVehicle = this.vehicleService.create(this.vehicle)
-    .subscribe(x => console.log(x));
-
-    console.log("TEST VEHICLE", testVehicle)
-    */
-   
    this.vehicleService.create(this.vehicle)
-    .subscribe(x => console.log(x));
+    .subscribe(
+      x => console.log(x),
+      // There should be a toasty toast here
+    );
   }
 }

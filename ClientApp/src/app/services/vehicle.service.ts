@@ -22,10 +22,5 @@ export class VehicleService {
 
   create(vehicle) {
     return this.http.post('/api/vehicles', vehicle);
-
-
-    //const body = JSON.stringify(vehicle);
-    //console.log(body);
-    //return this.http.post('/api/vehicles', body, httpOptions);
   }
 }
