@@ -41,11 +41,11 @@ export class VehicleFormComponent implements OnInit {
 
     Observable.forkJoin(sources).subscribe(data => {
       this.makes = data[0];
-      this.makes = data[1];
+      this.features = data[1];
 
       if (this.vehicle.id)
         this.vehicle = data[2];
-
+      
     }, err => {
       if (err.status == 404)
         this.router.navigate(['/home'])
@@ -70,8 +70,6 @@ export class VehicleFormComponent implements OnInit {
   submit() {
    this.vehicleService.create(this.vehicle)
     .subscribe(
-      x => console.log(x),
-      // There should be a toasty toast here
-    );
+      x => console.log(x));
   }
 }
