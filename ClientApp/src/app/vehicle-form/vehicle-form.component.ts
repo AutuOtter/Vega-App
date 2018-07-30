@@ -58,7 +58,7 @@ export class VehicleFormComponent implements OnInit {
         this.populateModels();
     }, err => {
       if (err.status == 404)
-        this.router.navigate(['/home'])
+        this.router.navigate(['/'])
     });
   }
 
@@ -104,6 +104,15 @@ export class VehicleFormComponent implements OnInit {
 
       this.vehicleService.create(this.vehicle)
         .subscribe(x => console.log(x));
+    }
+  }
+
+  delete() {
+    if (confirm("Are you sure?")) {
+      this.vehicleService.delete(this.vehicle.id)
+        .subscribe(x => {
+          this.router.navigate(['/']);
+        })
     }
   }
 }
