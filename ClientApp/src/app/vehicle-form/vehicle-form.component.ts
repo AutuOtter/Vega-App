@@ -93,8 +93,11 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-   this.vehicleService.create(this.vehicle)
-    .subscribe(
-      x => console.log(x));
+    // Other solution is to make id
+    // nullable is SaveVehicle and resource
+    this.vehicle.id = 0;
+
+    this.vehicleService.create(this.vehicle)
+      .subscribe(x => console.log(x));
   }
 }
