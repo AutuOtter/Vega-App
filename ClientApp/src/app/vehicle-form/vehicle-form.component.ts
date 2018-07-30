@@ -74,9 +74,13 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onMakeChange() {
+    this.populateModels();
+    delete this.vehicle.modelId;
+  }
+
+  private populateModels() {
     var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
     this.models = selectedMake ? selectedMake.models : [];
-    delete this.vehicle.modelId;
   }
 
   onFeatureToggle(featureId, $event) {
