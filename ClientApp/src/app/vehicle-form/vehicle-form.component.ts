@@ -55,7 +55,7 @@ export class VehicleFormComponent implements OnInit {
 
       if (this.vehicle.id)
         this.setVehicle(data[2]);
-      
+        this.populateModels();
     }, err => {
       if (err.status == 404)
         this.router.navigate(['/home'])
