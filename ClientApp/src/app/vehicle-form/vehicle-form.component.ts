@@ -1,3 +1,5 @@
+import * as _ from 'underscore';
+import { SaveVehicle, Vehicle } from './../models/vehicle';
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../services/vehicle.service';
 import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
@@ -13,9 +15,17 @@ export class VehicleFormComponent implements OnInit {
   makes;
   models;
   features;
-  vehicle: any = {
+  vehicle: SaveVehicle = {
+    id: 0,
+    makeId: 0,
+    modelId: 0,
+    isRegistered: false,
     features: [],
-    contact: {}
+    contact: {
+      name: '',
+      email: '',
+      phone: ''
+    },
   };
 
   // Ideally have no more than 3 services, 5 is max.
@@ -44,12 +54,23 @@ export class VehicleFormComponent implements OnInit {
       this.features = data[1];
 
       if (this.vehicle.id)
-        this.vehicle = data[2];
+        this.setVehicle(data[2]);
       
     }, err => {
       if (err.status == 404)
         this.router.navigate(['/home'])
     });
+  }
+
+  // Most had (v: Vehicle) but that would mess up
+  // this.setVehilce(data[2]) for me
+  private setVehicle(v) {
+    this.vehicle.id = v.id;
+    this.vehicle.makeId = v.make.id;
+    this.vehicle.modelId = v.model.id;
+    this.vehicle.isRegistered = v.isRegistered;
+    this.vehicle.features = _.pluck(v.features, 'id');
+    this.vehicle.contact = v.contact;
   }
 
   onMakeChange() {
