@@ -9,34 +9,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehicleListComponent implements OnInit {
   vehicles;
-  allVehicles;
   makes;
   filter: any = {};
 
   constructor(private vehicleService: VehicleService) { }
 
   ngOnInit() {
-    this.vehicleService.getMakes()
-      .subscribe(makes => this.makes = makes);
-
-    this.vehicleService.getVehicles()
-      .subscribe(vehicles => this.vehicles = this.allVehicles = vehicles);
+    this.populateMakes();
+    this.populateVehicles();
   }
 
-    onFilterChange() {
-      var filteredVehicles = this.allVehicles;
+  private populateMakes() {
+    this.vehicleService.getMakes()
+      .subscribe(makes => this.makes = makes);
+  }
 
-      if (this.filter.makeId)
-        filteredVehicles = filteredVehicles.filter(v => v.make.id == this.filter.makeId);
+  private populateVehicles() {
+    this.vehicleService.getVehicles(this.filter)
+      .subscribe(vehicles => this.vehicles = vehicles);
+  }
 
-      //if (this.filter.modelId)
-      //  filteredVehicles = filteredVehicles.filter(v => v.model.id == this.filter.modelId);
+  onFilterChange() {
+    this.filter.modelId = 2;
+    this.populateVehicles();
+  }
 
-      this.vehicles = filteredVehicles;
-    }
-
-    resetFilter() {
-      this.filter = {};
-      this.onFilterChange();
-    }
+  resetFilter() {
+    this.filter = {};
+    this.onFilterChange();
+  }
 }
