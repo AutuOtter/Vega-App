@@ -9,12 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehicleListComponent implements OnInit {
   vehicles;
+  makes;
+  filter: any = {};
 
   constructor(private vehicleService: VehicleService) { }
 
   ngOnInit() {
+    this.vehicleService.getMakes()
+      .subscribe(makes => this.makes = makes);
+
     this.vehicleService.getVehicles()
       .subscribe(vehicles => this.vehicles = vehicles);
   }
 
+    onFilterChange() {
+    }
 }
