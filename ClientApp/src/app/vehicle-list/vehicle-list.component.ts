@@ -30,7 +30,6 @@ export class VehicleListComponent implements OnInit {
   }
 
   onFilterChange() {
-    this.filter.modelId = 2;
     this.populateVehicles();
   }
 
