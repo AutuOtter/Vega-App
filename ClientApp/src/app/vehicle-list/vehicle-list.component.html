@@ -15,32 +15,19 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th (click)="sortBy('make')">
-                Make
-                <i *ngIf="query.sortBy === 'make'"
-                    class="glyphicon"
-                    [class.glyphicon-arrow-up]="query.isSortAscending"
-                    [class.glyphicon-arrow-down]="!query.isSortAscending">
-                </i>
+            <th *ngFor="let c of columns">
+                <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+                    {{ c.title }}
+                    <i *ngIf="query.sortBy === c.key"
+                        class="glyphicon"
+                        [class.glyphicon-arrow-up]="query.isSortAscending"
+                        [class.glyphicon-arrow-down]="!query.isSortAscending">
+                    </i>
+                </div>
+                <div *ngIf="!c.isSortable">
+                    {{ c.title }}
+                </div>
             </th>
-            <th (click)="sortBy('model')">
-                Model
-                <i *ngIf="query.sortBy === 'model'"
-                    class="glyphicon"
-                    [class.glyphicon-arrow-up]="query.isSortAscending"
-                    [class.glyphicon-arrow-down]="!query.isSortAscending">
-                </i>
-            </th>
-            <th (click)="sortBy('contactName')">
-                Contact Name
-                <i *ngIf="query.sortBy === 'contactName'"
-                    class="glyphicon"
-                    [class.glyphicon-arrow-up]="query.isSortAscending"
-                    [class.glyphicon-arrow-down]="!query.isSortAscending">
-                </i>
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
