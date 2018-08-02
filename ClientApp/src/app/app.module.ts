@@ -1,3 +1,4 @@
+import { PaginationComponent } from './shared/pagination.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +23,8 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
     CounterComponent,
     FetchDataComponent,
     VehicleFormComponent,
-    VehicleListComponent
+    VehicleListComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

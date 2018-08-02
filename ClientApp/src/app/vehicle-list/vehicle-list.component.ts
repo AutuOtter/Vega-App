@@ -10,12 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class VehicleListComponent implements OnInit {
   vehicles;
   makes;
-  query: any = {};
+  query: any = {
+    page: 1,
+    pageSize: 3
+  };
   columns = [
     { title: 'Id' },
     { title: 'Make', key: 'make', isSortable: true },
     { title: 'Model', key: 'model', isSortable: true },
-    { title: 'Contact Name', key: 'contactName', isSortable: true }
+    { title: 'Contact Name', key: 'contactName', isSortable: true },
+    { }
   ];
 
   constructor(private vehicleService: VehicleService) { }
@@ -52,6 +56,11 @@ export class VehicleListComponent implements OnInit {
       this.query.isSortAscending = true;
     }
     
+    this.populateVehicles();
+  }
+  
+  onPageChange(page) {
+    this.query.page = page;
     this.populateVehicles();
   }
 }
