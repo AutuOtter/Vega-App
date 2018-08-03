@@ -11,7 +11,7 @@ using vega.Core.Models;
 
 namespace vega.Controllers
 {
-    [Route("/api/vehicles/{vehicleId}}/photos")]
+    [Route("/api/vehicles/{vehicleId}/photos")]
     public class PhotosController : Controller
     {
         private readonly IHostingEnvironment host;
