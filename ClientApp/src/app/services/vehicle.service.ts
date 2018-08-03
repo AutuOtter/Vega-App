@@ -6,17 +6,19 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class VehicleService {
   private readonly vehiclesEndpoint = '/api/vehicles';
+  private readonly featuresEndpoint = '/api/features';
+  private readonly makesEndpoint = '/api/makes';
 
   constructor(private http: HttpClient) { }
 
   // LOOK UP this.http.get<VehicleService>('/api/features'); 
   // vs this.http.get('/api/features');
   getFeatures() {
-    return this.http.get('/api/features');
+    return this.http.get(this.featuresEndpoint);
   }
 
   getMakes() {
-    return this.http.get('/api/makes');
+    return this.http.get(this.makesEndpoint);
   }
 
   create(vehicle) {
@@ -24,15 +26,15 @@ export class VehicleService {
   }
 
   getVehicle(id) {
-    return this.http.get(this.vehiclesEndpoint + id);
+    return this.http.get(this.vehiclesEndpoint + '/' + id);
   }
 
   update(vehicle: SaveVehicle) {
-    return this.http.put(this.vehiclesEndpoint + vehicle.id, vehicle)
+    return this.http.put(this.vehiclesEndpoint + '/' + vehicle.id, vehicle)
   }
 
   delete(id) {
-    return this.http.delete(this.vehiclesEndpoint + id)
+    return this.http.delete(this.vehiclesEndpoint + '/' + id)
   }
 
   getVehicles(filter) {
