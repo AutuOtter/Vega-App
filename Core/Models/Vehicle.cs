@@ -25,10 +25,12 @@ namespace vega.Core.Models
         public DateTime LastUpdate { get; set; }
         // Many-to-Many relationship w/ features
         public ICollection<VehicleFeature> Features { get; set; }
+        public ICollection<Photo> Photos { get; set; }
 
         public Vehicle()
         {
             Features = new Collection<VehicleFeature>();
+            Photos = new Collection<Photo>();
         }
     }
 }
