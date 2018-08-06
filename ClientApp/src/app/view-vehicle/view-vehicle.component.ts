@@ -16,7 +16,7 @@ export class ViewVehicleComponent implements OnInit {
     private router: Router,
     private vehicleService: VehicleService) { 
       route.params.subscribe(p => {
-      this.vehicleId = +p['id'];
+      this.vehicleId = +p['id'] || 0;
       
       if (isNaN(this.vehicleId) || this.vehicleId <= 0) {
         router.navigate(['/vehicles']);

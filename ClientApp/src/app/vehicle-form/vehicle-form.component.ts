@@ -36,7 +36,7 @@ export class VehicleFormComponent implements OnInit {
     private vehicleService: VehicleService) { 
 
       route.params.subscribe(p => {
-        this.vehicle.id = +p['id'];
+        this.vehicle.id = +p['id'] || 0;
       });
     }
 
@@ -93,6 +93,8 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
+    console.log("Vehicle", this.vehicle);
+
     var result$ = (this.vehicle.id) ? this.vehicleService.update(this.vehicle) : this.vehicleService.create(this.vehicle); 
     result$.subscribe(vehicle => console.log("Toasty! Success in updating"));
       
