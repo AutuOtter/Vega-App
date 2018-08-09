@@ -16,8 +16,10 @@ namespace vega.Controllers
         private readonly IMapper mapper;
         private readonly IVehicleRepository repository;
         private readonly IUnitOfWork unitOfWork;
-        public VehiclesController(IMapper mapper, IVehicleRepository repository, IUnitOfWork unitOfWork)
+        private readonly IPhotoRepository photoRepository;
+        public VehiclesController(IMapper mapper, IVehicleRepository repository, IPhotoRepository photoRepository, IUnitOfWork unitOfWork)
         {
+            this.photoRepository = photoRepository;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.mapper = mapper;
@@ -57,7 +59,7 @@ namespace vega.Controllers
             vehicle.LastUpdate = DateTime.Now;
 
             await unitOfWork.CompleteAsync();
-            
+
             vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
@@ -90,14 +92,14 @@ namespace vega.Controllers
 
             return Ok(vehicleResource);
         }
-        
+
         [HttpGet]
         public async Task<QueryResultResource<VehicleResource>> GetVehicles(VehicleQueryResource filterResource)
         {
             var filter = mapper.Map<VehicleQueryResource, VehicleQuery>(filterResource);
-            
+
             var queryResult = await repository.GetVehicles(filter);
-            
+
             return mapper.Map<QueryResult<Vehicle>, QueryResultResource<VehicleResource>>(queryResult);
         }
     }

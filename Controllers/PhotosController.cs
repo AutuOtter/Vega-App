@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,15 +22,25 @@ namespace vega.Controllers
         private readonly IVehicleRepository repository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
-        private readonly PhotoSettings  photoSettings;
+        private readonly PhotoSettings photoSettings;
+        private readonly IPhotoRepository photoRepository;
 
-        public PhotosController(IHostingEnvironment host, IVehicleRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
+        public PhotosController(IHostingEnvironment host, IVehicleRepository repository, IPhotoRepository photoRepository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
         {
+            this.photoRepository = photoRepository;
             this.photoSettings = options.Value;
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.host = host;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<PhotoResource>> GetPhotos(int vehicleId)
+        {
+            var photos = await photoRepository.GetPhotos(vehicleId);
+
+            return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
         }
 
         [HttpPost]
@@ -43,7 +55,7 @@ namespace vega.Controllers
             if (file.Length == 0) return BadRequest("Empty file.");
             if (file.Length > photoSettings.MaxBytes) return BadRequest("Max file size exceeded.");
             if (!photoSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type.");
-            
+
             // Get wwwroot folder path
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
 
@@ -70,7 +82,7 @@ namespace vega.Controllers
             var photo = new Photo { FileName = fileName };
             vehicle.Photos.Add(photo);
             await unitOfWork.CompleteAsync();
-            
+
             return Ok(mapper.Map<Photo, PhotoResource>(photo));
         }
     }
