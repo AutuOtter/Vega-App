@@ -14,7 +14,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://vega-app.auth0.com/userinfo',
     redirectUri: 'https://localhost:5001/callback',
-    scope: 'openid email'
+    scope: 'openid email profile'
   });
 
   constructor(public router: Router) {}
