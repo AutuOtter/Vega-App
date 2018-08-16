@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
 
 (window as any).global = window;
