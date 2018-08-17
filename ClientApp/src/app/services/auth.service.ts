@@ -13,7 +13,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://vega-app.auth0.com/userinfo',
     redirectUri: 'https://localhost:5001/callback',
-    scope: 'openid email profile'
+    scope: 'openid email profile app_metadata user_metadata'
   });
 
   constructor(public router: Router) {}
