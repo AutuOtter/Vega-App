@@ -48,15 +48,16 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     
+    this.readUserFromLocalStorage();
+  }
+
+  public readUserFromLocalStorage() {
     var token = localStorage.getItem('id_token');
     
     if(token !== "undefined") {
       var decodedToken = jwt_decode(token);
-      console.log("Decoded id_token", decodedToken);
       this.roles = decodedToken['https://vega-app.awilson.com/roles'];
     }
-
-    console.log("Roles", this.roles);
   }
 
   public logout(): void {
