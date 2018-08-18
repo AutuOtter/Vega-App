@@ -17,6 +17,7 @@ import { VehicleService } from './services/vehicle.service';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 import { CallbackComponent } from './callback/callback.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CallbackComponent } from './callback/callback.component';
     VehicleListComponent,
     PaginationComponent,
     ViewVehicleComponent,
-    CallbackComponent
+    CallbackComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,6 +43,7 @@ import { CallbackComponent } from './callback/callback.component';
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
+      { path: 'admin', component: AdminComponent },
       { path: 'callback', component: CallbackComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },

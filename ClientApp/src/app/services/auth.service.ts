@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
+import * as jwt_decode from 'jwt-decode';
 
 (window as any).global = window;
 
 @Injectable()
 export class AuthService {
+  private roles: string[] = [];
 
   auth0 = new auth0.WebAuth({
     clientID: '4cCUVjPCey4F3ODmyKL2kW55x7Ecvag3',
@@ -17,6 +19,10 @@ export class AuthService {
   });
 
   constructor(public router: Router) {}
+
+  public isInRole(roleName): boolean {
+    return this.roles.indexOf(roleName) > -1;
+  }
 
   public login(): void {
     this.auth0.authorize();
@@ -41,6 +47,16 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    
+    var token = localStorage.getItem('id_token');
+    
+    if(token !== "undefined") {
+      var decodedToken = jwt_decode(token);
+      console.log("Decoded id_token", decodedToken);
+      this.roles = decodedToken['https://vega-app.awilson.com/roles'];
+    }
+
+    console.log("Roles", this.roles);
   }
 
   public logout(): void {
@@ -48,6 +64,8 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    this.roles = [];
+
     // Go back to the home route
     this.router.navigate(['/']);
     console.log("You have been logged out.");
