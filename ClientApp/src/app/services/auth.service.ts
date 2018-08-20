@@ -20,10 +20,6 @@ export class AuthService {
 
   constructor(public router: Router) {}
 
-  public isInRole(roleName): boolean {
-    return this.roles.indexOf(roleName) > -1;
-  }
-
   public login(): void {
     this.auth0.authorize();
   }
@@ -36,7 +32,7 @@ export class AuthService {
         this.router.navigate(['/vehicles']);
       } else if (err) {
         this.router.navigate(['/vehicles']);
-        console.log(err);
+        console.log(`Error authenticating: ${err}`);
       }
     });
   }
@@ -49,15 +45,6 @@ export class AuthService {
     localStorage.setItem('expires_at', expiresAt);
     
     this.readUserFromLocalStorage();
-  }
-
-  public readUserFromLocalStorage() {
-    var token = localStorage.getItem('id_token');
-    
-    if(token !== "undefined") {
-      var decodedToken = jwt_decode(token);
-      this.roles = decodedToken['https://vega-app.awilson.com/roles'];
-    }
   }
 
   public logout(): void {
@@ -77,5 +64,18 @@ export class AuthService {
     // Access Token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
     return new Date().getTime() < expiresAt;
+  }
+
+  public readUserFromLocalStorage() {
+    var token = localStorage.getItem('id_token');
+    
+    if(token !== "undefined") {
+      var decodedToken = jwt_decode(token);
+      this.roles = decodedToken['https://vega-app.awilson.com/roles'];
+    }
+  }
+
+  public isInRole(roleName): boolean {
+    return this.roles.indexOf(roleName) > -1;
   }
 }
