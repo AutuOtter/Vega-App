@@ -17,6 +17,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
@@ -42,6 +43,7 @@ import { VehicleService } from './services/vehicle.service';
   imports: [
     HttpClientModule,
     FormsModule,
+    ChartsModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     RouterModule.forRoot([
     //----- Possible refactor needed for requiredRoles. 
