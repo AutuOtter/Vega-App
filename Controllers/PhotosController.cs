@@ -21,17 +21,17 @@ namespace vega.Controllers
     {
         private readonly IHostingEnvironment host;
         private readonly IVehicleRepository repository;
-        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly PhotoSettings photoSettings;
         private readonly IPhotoRepository photoRepository;
+        private readonly IPhotoService photoService;
 
-        public PhotosController(IHostingEnvironment host, IVehicleRepository repository, IPhotoRepository photoRepository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
+        public PhotosController(IHostingEnvironment host, IVehicleRepository repository, IPhotoRepository photoRepository, IMapper mapper, IOptionsSnapshot<PhotoSettings> options, IPhotoService photoService)
         {
+            this.photoService = photoService;
             this.photoRepository = photoRepository;
             this.photoSettings = options.Value;
             this.mapper = mapper;
-            this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.host = host;
         }
@@ -60,30 +60,7 @@ namespace vega.Controllers
 
             // Get wwwroot folder path
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
-
-            // If it doesn't exist, create the dir.
-            if (!Directory.Exists(uploadsFolderPath))
-                Directory.CreateDirectory(uploadsFolderPath);
-
-            // Generate new file name
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-
-            // Direct path to where the file will be once uploaded
-            var filePath = Path.Combine(uploadsFolderPath, fileName);
-
-            // Read and store input file
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // System.Drawing to create thumbnail
-            // Wasn't avail to Mosh but it is now
-
-            // Update database
-            var photo = new Photo { FileName = fileName };
-            vehicle.Photos.Add(photo);
-            await unitOfWork.CompleteAsync();
+            var photo = await photoService.UploadPhoto(vehicle, file, uploadsFolderPath);
 
             return Ok(mapper.Map<Photo, PhotoResource>(photo));
         }
