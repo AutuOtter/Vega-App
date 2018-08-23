@@ -9,28 +9,16 @@ namespace vega.Core
     public class PhotoService : IPhotoService
     {
         private readonly IUnitOfWork unitOfWork;
-        public PhotoService(IUnitOfWork unitOfWork)
+        private readonly IPhotoStorage photoStorage;
+        public PhotoService(IUnitOfWork unitOfWork, IPhotoStorage photoStorage)
         {
+            this.photoStorage = photoStorage;
             this.unitOfWork = unitOfWork;
         }
-        public async Task<Photo> IPhotoService.UploadPhoto(Vehicle vehicle, IFormFile file, string uploadsFolderPath)
+        public async Task<Photo> UploadPhoto(Vehicle vehicle, IFormFile file, string uploadsFolderPath)
         {
-            // If it doesn't exist, create the dir.
-            if (!Directory.Exists(uploadsFolderPath))
-                Directory.CreateDirectory(uploadsFolderPath);
-
-            // Generate new file name
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-
-            // Direct path to where the file will be once uploaded
-            var filePath = Path.Combine(uploadsFolderPath, fileName);
-
-            // Read and store input file
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
+            var fileName = await photoStorage.StorePhoto(uploadsFolderPath, file);
+           
             // System.Drawing to create thumbnail
             // Wasn't avail to Mosh but it is now
 
@@ -39,6 +27,8 @@ namespace vega.Core
             vehicle.Photos.Add(photo);
             await unitOfWork.CompleteAsync();
 
+            // Could send notifications here
+            
             return photo;
         }
     }
