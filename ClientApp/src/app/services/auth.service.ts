@@ -13,7 +13,7 @@ export class AuthService {
     clientID: '4cCUVjPCey4F3ODmyKL2kW55x7Ecvag3',
     domain: 'vega-app.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://vega-app.auth0.com/userinfo',
+    audience: 'https://vega.api.com',
     redirectUri: 'https://localhost:5001/callback',
     scope: 'openid email profile app_metadata user_metadata'
   });
@@ -74,8 +74,17 @@ export class AuthService {
       this.roles = decodedToken['https://vega-app.awilson.com/roles'];
     }
   }
+  
+  public isInRoles(roles: string[]): boolean {
+    // If there are no roles provided, return true.
+    if (!roles) return true;
 
-  public isInRole(roleName): boolean {
-    return this.roles.indexOf(roleName) > -1;
+    // Check if the user has a required role.
+    for(let role of this.roles) {
+      if (this.roles && roles.includes(role))
+        return true;
+    }
+
+    return false;
   }
 }

@@ -15,11 +15,19 @@ namespace vega.Persistence
             this.context = context;
         }
 
-        public async Task<IEnumerable<Photo>> GetPhotos(int vehicleId)
+        public async Task<IList<Photo>> GetPhotos(int vehicleId)
         {
             return await context.Photos
                 .Where(p => p.VehicleId == vehicleId)
                 .ToListAsync();
+        }
+
+        public void Remove(IList<Photo> photos) {
+            var noOfPhotos = photos.Count();
+            
+            for(int i = 0; i < noOfPhotos; i++) {
+                context.Remove(photos[i]);
+            }
         }
     }
 }

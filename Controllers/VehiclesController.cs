@@ -78,6 +78,12 @@ namespace vega.Controllers
             if (vehicle == null)
                 return NotFound();
 
+            // Find corresponding photos also
+            var photos = await photoRepository.GetPhotos(id);
+
+            if (!(vehicle == null))
+                photoRepository.Remove(photos);
+            
             repository.Remove(vehicle);
             await unitOfWork.CompleteAsync();
 

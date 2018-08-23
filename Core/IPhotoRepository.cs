@@ -6,6 +6,7 @@ namespace vega.Core
 {
     public interface IPhotoRepository
     {
-         Task<IEnumerable<Photo>> GetPhotos(int vehicleId);
+         Task<IList<Photo>> GetPhotos(int vehicleId);
+         void Remove(IList<Photo> photo);
     }
 }

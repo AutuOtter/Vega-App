@@ -20,18 +20,18 @@
                         <span class='glyphicon glyphicon-user'></span> Log out
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+                <li [routerLinkActive]='["link-active"]' *ngIf="auth.isInRoles(['Admin', 'Editor'])">
                     <a [routerLink]='["/vehicles/new"]' (click)='collapse()'>
                         <span class='glyphicon glyphicon-plus'></span> New Vehicle
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+                <li [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/vehicles"]' (click)='collapse()'>
                         <span class='glyphicon glyphicon-list'></span> All Vehicles
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]' *ngIf="auth.isInRole('Admin')">
-                    <a [routerLink]='["/admin"]'>
+                <li [routerLinkActive]='["link-active"]' *ngIf="auth.isInRoles(['Admin'])">
+                    <a [routerLink]='["/admin"]' (click)='collapse()'>
                         <span class='glyphicon glyphicon-education'></span> Admin
                     </a>
                 </li>

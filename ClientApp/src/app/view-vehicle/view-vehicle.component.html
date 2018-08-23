@@ -30,8 +30,8 @@
       </ul>
       <br/>
       <p>
-        <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
-        <button class="btn btn-danger" (click)="delete()">Delete</button>
+        <a class="btn btn-primary" *ngIf="auth.isInRoles(['Admin', 'Editor'])" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
+        <button class="btn btn-danger" (click)="delete()" *ngIf="auth.isInRoles(['Admin'])">Delete</button>
         <a class="btn btn-default" [routerLink]="['/vehicles']">View All Vehicles</a>
       </p>
     </div>
@@ -39,7 +39,7 @@
     <!-- Photos tab -->
     <div role="tabpanel" class="tab-pane" id="photos">
       <h2>Photos</h2>
-      <input type="file" (change)="uploadPhoto()" #fileInput>
+      <input type="file" *ngIf="auth.isInRoles(['Admin', 'Editor'])" (change)="uploadPhoto()" #fileInput>
       <img *ngFor="let photo of photos" src="/uploads/{{ photo.fileName }}" class="img-thumbnail">
     </div>
   </div>
