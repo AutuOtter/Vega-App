@@ -55,7 +55,7 @@ export class AuthService {
     this.roles = [];
 
     // Go back to the home route
-    this.router.navigate(['/']);
+    this.router.navigate(['/vehicles']);
     console.log("You have been logged out.");
   }
 

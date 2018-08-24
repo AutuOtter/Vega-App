@@ -2,9 +2,6 @@
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PaginationComponent } from './shared/pagination.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
@@ -30,9 +27,6 @@ import { VehicleService } from './services/vehicle.service';
     AdminComponent,
     AppComponent,
     CallbackComponent,
-    CounterComponent,
-    FetchDataComponent,
-    HomeComponent,
     NavMenuComponent,
     PaginationComponent,
     UnauthorizedComponent,
@@ -51,8 +45,6 @@ import { VehicleService } from './services/vehicle.service';
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'admin', component: AdminComponent, canActivate: [ AuthGuard ], data: { requiredRoles: ['Admin'] } },
       { path: 'callback', component: CallbackComponent },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'unauthorized', component: UnauthorizedComponent },
       { path: 'vehicles/edit/:id', component: VehicleFormComponent, canActivate: [ AuthGuard ], data: { requiredRoles: ['Admin', 'Editor'] } },
       { path: 'vehicles/new', component: VehicleFormComponent, canActivate: [ AuthGuard ], data: { requiredRoles: ['Admin', 'Editor'] } },
